@@ -20,6 +20,7 @@
 		function test_save() {
 			$name = "Nike";
 			$id = 1;
+			var_dump($id)
 			$test_brand = new Brand($name, $id);
 			$test_brand->save();
 

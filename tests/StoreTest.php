@@ -94,5 +94,60 @@
             $result = Store::find($test_store->getId());
             $this->assertEquals($test_store, $result);
 		}
+		function test_update() {
+			$name = "Nike";
+			$id = 1;
+			$test_store = new Store($name, $id);
+			$test_store->save();
+
+			$new_name = "Vans";
+
+			$test_store->update($new_name);
+
+			$this->assertEquals($new_name, $test_store->getName());
+		}
+		function testDeleteStore(){
+            $name = "Dicks";
+            $id = 1;
+            $test_store = new Store($name, $id);
+            $test_store->save();
+            $name2 = "Addidas";
+            $id2 = 2;
+            $test_store2 = new Store($name2, $id2);
+            $test_store2->save();
+            $test_store2->deleteStoreBrands();
+            $this->assertEquals([$test_store2], Store::getAll());
+        }
+        function testAddBrand(){
+            $name = "Nike";
+            $id = 1;
+            $test_store = new Store($name, $id);
+            $test_store->save();
+
+            $id2 = 2;
+            $test_brand = new Brand($name, $id2);
+            $test_brand->save();
+            $test_store->addBrand($test_brand);
+            
+            $this->assertEquals($test_store->getBrands(), [$test_brand]);
+        }
+        function testGetBrands(){
+            $name = "Nike";
+            $id = 1;
+            $test_store = new store($name, $id);
+            $test_store->save();
+            $name2 = "Addidas";
+            $id2= 2;
+            $test_brand = new brand($name2, $id2);
+            $test_brand->save();
+            $name3 = "Reebok";
+            $id3 = 3;
+            $test_brand2 = new brand($name3, $id3);
+            $test_brand2->save();
+            $test_store->addbrand($test_brand);
+            $test_store->addbrand($test_brand2);
+            $this->assertEquals($test_store->getbrands(), [$test_brand, $test_brand2]);
+        }
+
 	}
 ?>
