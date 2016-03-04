@@ -51,5 +51,20 @@
 
 			$this->assertEquals(true, is_numeric($result));
 		}
+		function test_getAll() {
+			$name = "Nike";
+			$id = 1;
+			$test_brand = new Brand($name, $id);
+			$test_brand->save();
+
+			$name2 = "Addidas";
+			$id2 = 2;
+			$test_brand2 = new Brand($name, $id);
+			$test_brand2->save();
+
+			$result = Brand::getAll();
+
+			$this->assertEquals([$test_brand, $test_brand2], $result);
+		}
 	}
 ?>
