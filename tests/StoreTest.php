@@ -43,5 +43,15 @@
 
 			$this->assertEquals($id, $result);
 		}
+		function test_save() {
+			$name = "Nike";
+			$id = 1;
+			$test_store = new Store($name, $id);
+			$test_store->save();
+
+			$result = Store::getAll();
+
+			$this->assertEquals($test_store, $result[0]);
+		}
 	}
 ?>
