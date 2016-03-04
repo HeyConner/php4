@@ -27,5 +27,29 @@
 
 			$this->assertEquals([$test_brand], $result);
 		}
+		function test_find() {
+			$name = "Nike";
+			$name2 = "Addidas";
+			$id = 1;
+			$id2 = 2;
+			$test_brand = new Brand($name, $id);
+			$test_brand2 = new Brand($name2, $id2);
+			$test_brand->save();
+			$test_brand2->save();
+
+			$result = Brand::find($test_brand->getId());
+
+			$this->assertEquals($test_brand, $result);
+		}
+		function test_getId() {
+			$name = "Nike";
+			$id = 1;
+			$test_brand = new Brand($name, $id);
+			$test_brand->save();
+
+			$result = $test_brand->getId();
+
+			$this->assertEquals(true, is_numeric($result));
+		}
 	}
 ?>
