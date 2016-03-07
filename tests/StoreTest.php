@@ -1,4 +1,4 @@
-<?php 
+<?php
 	/**
 	* @backupGlobals disabled
 	* @backupStaticAttributes disabled
@@ -7,7 +7,7 @@
 	require_once "src/Store.php";
 	require_once "src/Brand.php";
 
-	$server = 'mysql:host=localhost:8889;dbname=shoes_test';
+	$server = 'mysql:host=localhost;dbname=shoes_test';
 	$username = 'root';
 	$password = 'root';
 	$DB = new PDO($server, $username, $password);
@@ -116,7 +116,7 @@
             $test_store2 = new Store($name2, $id2);
             $test_store2->save();
             $test_store2->deleteStoreBrands();
-            $this->assertEquals([$test_store2], Store::getAll());
+            $this->assertEquals([$test_store], Store::getAll());
         }
         function testAddBrand(){
             $name = "Nike";
@@ -128,8 +128,9 @@
             $test_brand = new Brand($name, $id2);
             $test_brand->save();
             $test_store->addBrand($test_brand);
-            
-            $this->assertEquals($test_store->getBrands(), [$test_brand]);
+			$result = $test_store->getBrands();
+
+            $this->assertEquals([$test_brand], $result);
         }
         function testGetBrands(){
             $name = "Nike";
@@ -146,7 +147,9 @@
             $test_brand2->save();
             $test_store->addbrand($test_brand);
             $test_store->addbrand($test_brand2);
-            $this->assertEquals($test_store->getbrands(), [$test_brand, $test_brand2]);
+			$result = $test_store->getBrands();
+
+            $this->assertEquals([$test_brand, $test_brand2], $result);
         }
 
 	}

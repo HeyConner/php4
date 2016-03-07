@@ -1,4 +1,4 @@
-<?php 
+<?php
 	class Store {
 		private $name;
 		private $id;
@@ -26,7 +26,7 @@
 			$this->setName($new_name);
 		}
 		function addBrand($brand) {
-			$GLOBALS['DB']->exec("INSERT INTO stores_brands (store_id, brand_id) VALUES ({$this->getId()}, {$brand->getId()});");
+			$GLOBALS['DB']->exec("INSERT INTO brands_stores (store_id, brand_id) VALUES ({$this->getId()}, {$brand->getId()});");
 		}
 		static function deleteAll() {
 			$GLOBALS['DB']->exec("DELETE FROM stores;");
@@ -55,7 +55,10 @@
 		}
 		function getBrands()
         {
-            $returned_brands = $GLOBALS['DB']->query("SELECT brands.* FROM stores JOIN stores_brands ON (stores_brands.category_id = stores.id) JOIN brands ON (brands.id = stores_brands.brand_id) WHERE stores.id = {$this->getId()};");
+            $returned_brands = $GLOBALS['DB']->query("SELECT brands.* FROM stores
+				JOIN brands_stores ON (brands_stores.store_id = stores.id)
+				JOIN brands ON (brands.id = brands_stores.brand_id)
+				WHERE stores.id = {$this->getId()};");
             $brands = array();
             foreach($returned_brands as $brand) {
                 $name = $brand['name'];
@@ -66,7 +69,8 @@
             return $brands;
         }
 		function deleteStoreBrands() {
-			$GLOBALS['DB']->exec("DELETE FROM stores_brands WHERE store_id = {$this->getId()};");
+			$GLOBALS['DB']->exec("DELETE FROM brands_stores WHERE store_id = {$this->getId()};");
+			$GLOBALS['DB']->exec("DELETE FROM stores WHERE id = {$this->getId()};");
 		}
 	}
 ?>
