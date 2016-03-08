@@ -5,7 +5,7 @@
 
 	$app = new Silex\Application();
 
-	$server = 'mysql:host=localhost;dbname=shoes';
+	$server = 'mysql:host=localhost:8889;dbname=shoes';
 	$username = 'root';
 	$password = 'root';
 	$DB = new PDO($server, $username, $password);
@@ -16,4 +16,6 @@
 	$app->register(new Silex\Provider\TwigServiceProvider(), array(
 		'twig.path' => __DIR__.'/../views'
 		));
+
+	return $app;
 ?>

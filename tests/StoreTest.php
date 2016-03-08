@@ -7,7 +7,7 @@
 	require_once "src/Store.php";
 	require_once "src/Brand.php";
 
-	$server = 'mysql:host=localhost;dbname=shoes_test';
+	$server = 'mysql:host=localhost:8889;dbname=shoes_test';
 	$username = 'root';
 	$password = 'root';
 	$DB = new PDO($server, $username, $password);
@@ -120,12 +120,10 @@
         }
         function testAddBrand(){
             $name = "Nike";
-            $id = 1;
-            $test_store = new Store($name, $id);
+            $test_store = new Store($name);
             $test_store->save();
 
-            $id2 = 2;
-            $test_brand = new Brand($name, $id2);
+            $test_brand = new Brand($name);
             $test_brand->save();
             $test_store->addBrand($test_brand);
 			$result = $test_store->getBrands();
