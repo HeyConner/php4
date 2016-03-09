@@ -4,26 +4,25 @@
     <title>Brands</title>
   </head>
   <body>
-    <h1>Brands</h1>
-
-    {% if brands is not empty %}
-      <p>Brands:</p>
-      <ul>
-        {% for brands in brands %}
-          <li>{{ brands.getName }}</li>
-        {% endfor %}
-      </ul>
-    {% endif %}
-
     <form action='/brands' method='post'>
       <div>
-        <label for='brands_name'>Brands Name:</label>
+        <label for='brands_name'>Brand Name:</label>
         <input id='brand_name' name='brand_name' type='text'>
       </div>
     </form>
-    <form action=/>
+     <form action=/>
      <button type="submit">Add Brand</button>
     </form>
+     {% if brands is not empty %}
+        <p>Here are all brands:</p>
+        <ul>
+            {% for brand in brands %}
+                <li><a href="/brands/{{ brand.getId }}">{{ brand.getName }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No brands yet!</p>
+    {% endif %}
     <form action="/delete_brands" method="post">
       <button type="submit">Clear Brands</button>
     </form>
