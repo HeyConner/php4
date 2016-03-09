@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Brands</title>
+  </head>
+  <body>
+    <h1>Brands</h1>
+
+    {% if brands is not empty %}
+      <p>Brands:</p>
+      <ul>
+        {% for brands in brands %}
+          <li>{{ brands.getName }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    <form action='/brands' method='post'>
+      <div>
+        <label for='brands_name'>Brands Name:</label>
+        <input id='brand_name' name='brand_name' type='text'>
+      </div>
+      <button type="submit">Add Brand</button>
+    </form>
+
+    <form action="/delete_brands" method="post">
+      <button type="submit">Clear Brands</button>
+    </form>
+
+    <p><a href='/'>Home</a></p>
+  </body>
+</html>
