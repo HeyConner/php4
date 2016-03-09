@@ -5,7 +5,7 @@
 
 	$app = new Silex\Application();
 
-	$server = 'mysql:host=localhost:8889;dbname=shoes';
+	$server = 'mysql:host=localhost;dbname=shoes';
 	$username = 'root';
 	$password = 'root';
 	$DB = new PDO($server, $username, $password);
@@ -42,7 +42,7 @@ $app->get("/", function() use ($app){
     $app->get('/add_store', function() use ($app){
         return $app['twig']->render('add_store.html.twig', array('stores' => Store::getAll()));
     });
-    $app->get('/brand/{id}', function($id) use ($app){
+    $app->get('/brands/{id}', function($id) use ($app){
         $brand = Brand::find($id);
         return $app['twig']->render('stores.html.twig', array('brand' => $brand, 'stores' => $brand->getStores(), 'all_stores' => Store::getAll()));
     });
@@ -52,12 +52,21 @@ $app->get("/", function() use ($app){
         $brand->addStore($store);
         return $app['twig']->render('stores.html.twig', array('brand' => $brand, 'stores' => $brand->getStores(), 'all_stores' => Store::getAll()));
     });
-    
+
     $app->get('/stores/{id}', function($id) use ($app){
         $store = Store::find($id);
         return $app['twig']->render('brands.html.twig', array('store' => $store, 'brands' => $store->getBrands(), 'all_brands' => Brand::getAll()));
     });
- 
+
+	$app->post('/stores/{id}', function($id) use ($app){
+		$store = Store::find($id);
+		$new_brand = new Brand($_POST['brand_name']);
+		$new_brand->save();
+		$store->addBrand($new_brand);
+		return $app['twig']->render('brands.html.twig', array('store' => $store, 'brands' => $store->getBrands(), 'all_brands' => Brand::getAll()));
+	});
+
+
 
 	return $app;
 ?>

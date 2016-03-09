@@ -4,13 +4,12 @@
     <title>Brands</title>
   </head>
   <body>
-    <form action='/brands' method='post'>
+      <h3>{{store.getName}}</h3>
+    <form action='/stores/{{store.getId}}' method='post'>
       <div>
-        <label for='brands_name'>Brand Name:</label>
+        <label for='brand_name'>Brand Name:</label>
         <input id='brand_name' name='brand_name' type='text'>
       </div>
-    </form>
-     <form action=/>
      <button type="submit">Add Brand</button>
     </form>
      {% if brands is not empty %}

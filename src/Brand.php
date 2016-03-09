@@ -1,4 +1,4 @@
-<?php 
+<?php
 	class Brand {
 		private $name;
 		private $id;
@@ -52,6 +52,9 @@
 				$GLOBALS['DB']->exec("DELETE FROM brands WHERE id = {$this->getId()};");
 				$GLOBALS['DB']->exec("DELETE FROM brands_store WHERE brand_id = {this->getId()};");
 			}
+
+
+			////NEED A JOIN STATEMENT
 			function getStores() {
 				$query = $GLOBALS['DB']->query("SELECT store_id FROM brands_store WHERE brand_id = {$this->getId()};");
 
