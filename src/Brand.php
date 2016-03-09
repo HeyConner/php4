@@ -42,6 +42,7 @@
 				if($brand_id == $search_id) {
 					$found_brand = $brand;
 				}
+			}
 				return $found_brand;
 			}
 			function update($new_name) {
@@ -50,29 +51,29 @@
 			}
 			function delete() {
 				$GLOBALS['DB']->exec("DELETE FROM brands WHERE id = {$this->getId()};");
-				$GLOBALS['DB']->exec("DELETE FROM brands_store WHERE brand_id = {this->getId()};");
+				$GLOBALS['DB']->exec("DELETE FROM brands_store WHERE brand_id = {$this->getId()};");
 			}
+			function addStore($new_store){
+            $GLOBALS['DB']->exec("INSERT INTO brands_store (brand_id, store_id) VALUES ({$this->getId()}, {$new_store->getId()});");
+        }
 
 
 			////NEED A JOIN STATEMENT
 			function getStores() {
-				$query = $GLOBALS['DB']->query("SELECT store_id FROM brands_store WHERE brand_id = {$this->getId()};");
+				$returned_stores = $GLOBALS['DB']->query("SELECT stores.* FROM brands
+                	JOIN brands_store ON (brands_store.brand_id = brands.id)
+                	JOIN stores ON (stores.id = brands_store.store_id)
+                	WHERE brands.id = {$this->getId()};");
+            	$stores = array();
+				foreach($returned_stores as $store) {
 
-				$stores__ids = $query->fetchAll(PDO::FETCH_ASSOC);
-
-				$stores = array();
-				foreach($store_ids as $id) {
-					$store_id = $id['store_id'];
-					$result = $GLOBALS['DB']->query("SELECT * FROM stores WHERE id = {$store_id};");
-					$returned_brands = $result->fetchAll(PDO::FETCH_ASSOC);
-
-					$name = $returned_brands[0]['name'];
-					$id = $returned_brands[0]['id'];
-					$new_brand = new Brand($name);
+					$name = $store['name'];
+					$id = $store['id'];
+					$new_store = new Store($name, $id);
 					array_push($stores, $new_store);
 				}
 				return $stores;
 			}
 		}
-	}
+
 ?>

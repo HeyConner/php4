@@ -4,8 +4,9 @@
     <title>Brands</title>
   </head>
   <body>
-      <h3>{{store.getName}}</h3>
+      <h3>Your Brands at {{store.getName}}</h3>
     <form action='/stores/{{store.getId}}' method='post'>
+        <input type="hidden" id="store_id" name="store_id" value="{{ brand.getId }}">
       <div>
         <label for='brand_name'>Brand Name:</label>
         <input id='brand_name' name='brand_name' type='text'>
