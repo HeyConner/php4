@@ -3,7 +3,19 @@
     <title>Brand</title>
 </head>
 <body>
-    <h1>{{ store.getName }}</h1>
+
+    <h1>{{ brand.getName }}</h1>
+
+    <form action="/brands/{{ brand.getId }}" method="post">
+          <input type="hidden" id="store_id" name="store_id" value="{{ store.getId }}">
+          <label for="store_id">Select a Store:</label>
+          <select name="store_id">
+            {% for store in allStores %}
+              <option value="{{ store.getId }}">{{ store.getName }}</option>
+            {% endfor %}
+          </select>
+          <button type="submit">Add Stores</button>
+    </form>
 
     {% if stores is not empty %}
         <p>Here are the stores:</p>
@@ -16,20 +28,12 @@
 
     <h4>Add a Brand</h4>
 
-    <form action='/brand' method='post'>
-        <div>
-            <input id="store_id" name="store_id" type="hidden" value="{{ store.getId }}">
 
-            <label for='store_name'>Brand Name:</label>
-            <input id='store_name' name='store_name' type='text'>
-        </div>
-        <button type='submit'>Add Brand</button>
+    <form action="/delete_brand/{{ brand.getId }}" method="post">
+      <input name="_method" type="hidden" value="delete">
+      <button type="submit">Delete Brand</button>
     </form>
     
-    <form action="/delete_stores" method="post">
-      <button type="submit">Clear Stores</button>
-    </form>
-
     <p><a href='/'>Home</a></p>
 </body>
 </html>
